@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import { createApiUrl, makeGetRequest } from './service/api';
+import { StyleSheet, Text, View } from 'react-native';
 import TranslatedTexts from './models/translatedTexts'
 
 interface Props { }
