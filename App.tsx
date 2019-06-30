@@ -1,45 +1,21 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import { createApiUrl, makeGetRequest } from './service/api';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import { StyleSheet, Text, View } from 'react-native';
+import TranslatedTexts from './models/translatedTexts'
 
 interface Props { }
 
-interface TextMap {
-  [key: string]: string
-}
-
 export default class App extends Component<Props> {
-  async getTexts(): Promise<TextMap> {
-    const res = await makeGetRequest<TextMap>({
-      url: createApiUrl("/textservice/v1/texts/group/NATIVE_APP"),
-      useAuth: false
-    });
-
-    if (res.error) {
-      console.log(res.error);
-    }
-
-    return res.body || {};
-  }
 
   async componentDidMount() {
-    const texts = await this.getTexts();
+    const texts = TranslatedTexts.create({ loaded: false })
+    texts.fetchTexts()
     console.log(texts);
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.tsx</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <Text style={styles.welcome}>Hello World!</Text>
       </View>
     );
   }
@@ -56,10 +32,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
