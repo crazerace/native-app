@@ -1,15 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * 
- * Generated with the TypeScript template
- * https://github.com/emin93/react-native-template-typescript
- * 
- * @format
- */
-
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import { createApiUrl, makeGetRequest } from './service/api';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,8 +9,23 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-interface Props {}
+interface Props { }
+
 export default class App extends Component<Props> {
+  async getTexts(): Promise<Map<string, string>> {
+    const res = await makeGetRequest({
+      url: createApiUrl("/textservice/v1/texts/group/NATIVE_APP"),
+      useAuth: false
+    });
+
+    return res.response;
+  }
+
+  async componentDidMount() {
+    const texts = await this.getTexts();
+    console.log(texts);
+  }
+
   render() {
     return (
       <View style={styles.container}>
