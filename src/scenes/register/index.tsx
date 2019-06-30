@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 
 interface Props { };
 
-export default class Register extends Component<Props> {
+export default class RegisterContainer extends Component<Props> {
     render() {
         return (
             <View>
