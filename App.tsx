@@ -11,14 +11,22 @@ const instructions = Platform.select({
 
 interface Props { }
 
+interface TextMap {
+  [key: string]: string
+}
+
 export default class App extends Component<Props> {
-  async getTexts(): Promise<Map<string, string>> {
-    const res = await makeGetRequest({
+  async getTexts(): Promise<TextMap> {
+    const res = await makeGetRequest<TextMap>({
       url: createApiUrl("/textservice/v1/texts/group/NATIVE_APP"),
       useAuth: false
     });
 
-    return res.response;
+    if (res.error) {
+      console.log(res.error);
+    }
+
+    return res.body || {};
   }
 
   async componentDidMount() {

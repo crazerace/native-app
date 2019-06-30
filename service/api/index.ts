@@ -21,12 +21,12 @@ export interface APIOptions {
     useAuth: boolean,
     method?: Method,
     body?: any,
-    headers?: Object,
+    headers?: Headers,
     timeout?: number
 };
 
-export interface APIResponse {
-    response?: any,
+export interface APIResponse<T = any> {
+    body?: T,
     error?: APIError,
     status: number
 };
@@ -43,23 +43,23 @@ function createApiUrl(route: string): string {
     return `${BACKEND_URL}${route}`
 };
 
-function makeGetRequest(opts: APIOptions): Promise<APIResponse> {
-    return makeRequest({ ...opts, method: "get" });
+function makeGetRequest<T>(opts: APIOptions): Promise<APIResponse<T>> {
+    return makeRequest<T>({ ...opts, method: "get" });
 };
 
-function makePostRequest(opts: APIOptions): Promise<APIResponse> {
-    return makeRequest({ ...opts, method: "post" });
+function makePostRequest<T>(opts: APIOptions): Promise<APIResponse<T>> {
+    return makeRequest<T>({ ...opts, method: "post" });
 };
 
-function makePutRequest(opts: APIOptions): Promise<APIResponse> {
-    return makeRequest({ ...opts, method: "put" });
+function makePutRequest<T>(opts: APIOptions): Promise<APIResponse<T>> {
+    return makeRequest<T>({ ...opts, method: "put" });
 };
 
-function makeDeleteRequest(opts: APIOptions): Promise<APIResponse> {
-    return makeRequest({ ...opts, method: "delete" });
+function makeDeleteRequest<T>(opts: APIOptions): Promise<APIResponse<T>> {
+    return makeRequest<T>({ ...opts, method: "delete" });
 };
 
-async function makeRequest(opts: APIOptions): Promise<APIResponse> {
+async function makeRequest<T>(opts: APIOptions): Promise<APIResponse<T>> {
     const { url, useAuth, method = "get", body, headers, timeout = TIMEOUT_MS } = opts;
     const requestHeaders = (headers) ? headers : createHeaders(useAuth);
     try {
@@ -70,11 +70,11 @@ async function makeRequest(opts: APIOptions): Promise<APIResponse> {
             data: body,
             headers: requestHeaders
         });
-        return { response: data, error: undefined, status }
+        return { body: data, error: undefined, status }
     } catch (error) {
         const err = formatAxiosError(error, opts);
         console.log("APIError: ", err);
-        return { response: undefined, error: err, status: err.status }
+        return { body: undefined, error: err, status: err.status }
     }
 }
 
@@ -91,7 +91,11 @@ function formatAxiosError(error: AxiosError<APIError>, opts: APIOptions): APIErr
     }
 }
 
-function createHeaders(useAuth: boolean = true): Object {
+interface Headers {
+    [name: string]: string
+}
+
+function createHeaders(useAuth: boolean = true): Headers {
     const baseHeaders = {
         "Content-Type": "application/json",
         "Accept": "application/json",
