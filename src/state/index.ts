@@ -3,8 +3,7 @@ import {
     createStore,
     combineReducers,
     compose,
-    AnyAction,
-    Action
+    AnyAction
 } from "redux";
 import thunk, { ThunkAction } from "redux-thunk";
 import logger from "redux-logger";
@@ -15,7 +14,7 @@ const reducer = combineReducers({
 });
 
 export type AppState = ReturnType<typeof reducer>;
-export type Thunk = ThunkAction<void, AppState, null, AnyAction>;
+export type Thunk<T> = ThunkAction<T, AppState, void, AnyAction>;
 
 const store = createStore(reducer, compose(
     applyMiddleware(thunk, logger)

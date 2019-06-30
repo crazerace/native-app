@@ -1,3 +1,4 @@
+import { Dispatch, Action } from 'redux';
 import { Thunk } from '../../state';
 import * as actions from "./actions";
 import * as types from "./types";
@@ -8,7 +9,7 @@ export {
     fetchTexts
 };
 
-const fetchTexts = (): Thunk => async dispatch => {
+const fetchTexts = (): Thunk<Promise<void>> => async (dispatch: Dispatch) => {
     try {
         const url = createApiUrl(`/textservice/v1/texts/group/${TEXT_GROUP}`);
         const { body, error } = await makeGetRequest<types.TextMap>({ url, useAuth: false });
@@ -21,6 +22,4 @@ const fetchTexts = (): Thunk => async dispatch => {
         console.error(error);
     }
 }
-
-
 
