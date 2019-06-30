@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { createApiUrl, makeGetRequest } from './service/api';
+import TranslatedTexts from './models/translatedTexts'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -22,7 +23,8 @@ export default class App extends Component<Props> {
   }
 
   async componentDidMount() {
-    const texts = await this.getTexts();
+    const texts = TranslatedTexts.create({ loaded: false })
+    texts.fetchTexts()
     console.log(texts);
   }
 
