@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import { TranslatedTexts } from "../../state/texts/types";
+import { Text } from 'react-native';
+import { connect } from "react-redux";
+import { AppState } from "../../state";
+import { TextsState } from "../../state/texts";
 import LoadingText from "./loading";
 
 interface Props {
     textKey: string,
-    texts: TranslatedTexts
+    texts: TextsState
+};
+
+interface UserProps {
+    textKey: string
 };
 
 class TranslatedText extends Component<Props> {
@@ -18,4 +24,11 @@ class TranslatedText extends Component<Props> {
     }
 };
 
-export default TranslatedText;
+function mapStateToProps(state: AppState, props: UserProps): Props {
+    return {
+        textKey: props.textKey,
+        texts: state.texts,
+    };
+};
+
+export default connect(mapStateToProps)(TranslatedText);
