@@ -1,8 +1,10 @@
-import { Dispatch, Action } from 'redux';
+import { Dispatch } from 'redux';
+import httpclient from "@czarsimon/httpclient";
+import log from "@czarsimon/remotelogger";
 import { Thunk } from '../../state';
 import * as actions from "./actions";
 import * as types from "./types";
-import { makeGetRequest, createApiUrl } from "../../service/api";
+import { createApiUrl } from "../../service/api";
 import { TEXT_GROUP } from '../../constants';
 
 export {
@@ -12,14 +14,16 @@ export {
 const fetchTexts = (): Thunk<Promise<void>> => async (dispatch: Dispatch) => {
     try {
         const url = createApiUrl(`/textservice/v1/texts/group/${TEXT_GROUP}`);
-        const { body, error } = await makeGetRequest<types.TextMap>({ url, useAuth: false });
+        const { body, error } = await httpclient.get<types.TextMap>({ url, useAuth: false });
         if (body) {
             dispatch(actions.add(body));
+            log.info("Translated texts loaded");
         } else {
-            console.error(error);
+            const errorMessage = (error) ? error.message : "No body returned for translated texts";
+            log.error(errorMessage);
         }
     } catch (error) {
-        console.error(error);
+        log.error(error.message);
     }
 }
 
