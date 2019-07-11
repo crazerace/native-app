@@ -1,25 +1,16 @@
-import { ADD } from "./types";
-import { TextMap } from "../../types";
-import { TextsAction } from "./actions";
+import { ActionType, createReducer, action } from 'typesafe-actions';
+import { TextMap, TextsState } from "../../types";
+import * as actions from "./actions";
 
-export interface TextsState {
-    loaded: boolean,
-    data: TextMap
-};
+type TextsAction = ActionType<typeof actions>;
 
 const initalState: TextsState = {
     loaded: false,
     data: {}
 };
 
-function reducer(state: TextsState = initalState, action: TextsAction): TextsState {
-    switch (action.type) {
-        case ADD:
-            return addTexts(state, action.payload);
-        default:
-            return state;
-    }
-};
+const reducer = createReducer<TextsState, TextsAction>(initalState)
+    .handleAction(actions.addTexts, (state, action) => addTexts(state, action.payload));
 
 function addTexts(state: TextsState, texts: TextMap): TextsState {
     return {

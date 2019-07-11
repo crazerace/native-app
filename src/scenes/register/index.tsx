@@ -5,7 +5,7 @@ import { AppState } from "../../state";
 import { TextGetter } from "../../types";
 import { translatedText } from "../../service/texts";
 import Register from "./components";
-import { NewUserRequest } from "./types";
+import { NewUserRequest } from "../../types";
 
 interface Props {
     translatedTexts: TextGetter

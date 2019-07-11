@@ -1,26 +1,18 @@
-import * as types from "./types";
-import { UserAction } from "./actions";
+import { ActionType, createReducer } from 'typesafe-actions';
+import { UserState, Credentials } from "../../types";
+import * as actions from "./actions";
 
-export interface UserState {
-    credentials?: types.Credentials
-    user?: types.User
-};
+type UserAction = ActionType<typeof actions>;
 
 const initalState: UserState = {
     credentials: undefined,
     user: undefined
 };
 
-function reducer(state: UserState = initalState, action: UserAction): UserState {
-    switch (action.type) {
-        case types.ADD_CREDENTIANLS:
-            return addCredentials(state, action.payload);
-        default:
-            return state;
-    }
-};
+const reducer = createReducer<UserState, UserAction>(initalState)
+    .handleAction(actions.addCredentials, (state, action) => addCredentials(state, action.payload));
 
-function addCredentials(state: UserState, credentials: types.Credentials): UserState {
+function addCredentials(state: UserState, credentials: Credentials): UserState {
     return {
         ...state,
         credentials: {

@@ -7,12 +7,17 @@ import {
 } from "redux";
 import thunk, { ThunkAction } from "redux-thunk";
 import logger from "redux-logger";
-import texts, { fetchTexts, addTexts } from "./texts";
+import texts, { addTexts } from "./texts";
+import error from "./error";
+import user from "./user";
+import { fetchTexts } from "../service/texts";
 import { getClientInfo, initLogAndHttpclient } from './initState';
 import { DEV_MODE } from "../constants";
 
 const reducer = combineReducers({
-    texts
+    texts,
+    error,
+    user
 });
 
 export type AppState = ReturnType<typeof reducer>;

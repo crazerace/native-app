@@ -6,6 +6,7 @@ import { ApplicationProvider, Layout } from 'react-native-ui-kitten';
 import log from "@czarsimon/remotelogger";
 import store, { initState } from "./state";
 import RegisterContainer from './scenes/register';
+import ErrorContainer from "./components/error";
 
 interface Props { };
 
@@ -21,6 +22,7 @@ export default class App extends Component<Props> {
         <Layout style={{ flex: 1 }}>
           <Provider store={store}>
             <View style={styles.container}>
+              <ErrorContainer />
               <RegisterContainer />
             </View >
           </Provider>
@@ -35,6 +37,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    marginHorizontal: '5%'
   }
 });

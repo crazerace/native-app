@@ -1,1 +1,0 @@
-export const ADD: string = "crazerace/texts/ADD";

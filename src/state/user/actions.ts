@@ -1,15 +1,6 @@
-import * as types from "./types";
+import { createStandardAction } from 'typesafe-actions';
+import { Credentials } from "../../types";
 
-export interface AddAction {
-    type: typeof types.ADD_CREDENTIANLS,
-    payload: types.Credentials
-};
+export const ADD_CREDENTIANLS: string = "crazerace/user/ADD_CREDENTIANLS";
 
-export type UserAction = AddAction;
-
-export function add(credentials: types.Credentials): AddAction {
-    return {
-        type: types.ADD_CREDENTIANLS,
-        payload: credentials
-    }
-}
+export const addCredentials = createStandardAction(ADD_CREDENTIANLS)<Credentials>();

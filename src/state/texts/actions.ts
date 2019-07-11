@@ -1,16 +1,6 @@
-import { ADD } from "./types";
+import { createStandardAction } from 'typesafe-actions';
 import { TextMap } from "../../types";
 
-export interface AddAction {
-    type: typeof ADD,
-    payload: TextMap
-};
+export const ADD: string = "crazerace/texts/ADD";
 
-export type TextsAction = AddAction;
-
-export function add(texts: TextMap): AddAction {
-    return {
-        type: ADD,
-        payload: texts
-    }
-}
+export const addTexts = createStandardAction(ADD)<TextMap>();

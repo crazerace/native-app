@@ -1,6 +1,5 @@
-import reducer from './reducer';
+import reducer from "./reducer";
 
-export { fetchTexts, addTexts } from './operations';
-export * from "./reducer";
+export { addTexts } from "./actions";
 
 export default reducer;
