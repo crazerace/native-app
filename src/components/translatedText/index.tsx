@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text } from 'react-native-ui-kitten';
 import { connect } from "react-redux";
 import { AppState } from "../../state";
 import { TextsState } from "../../state/texts";

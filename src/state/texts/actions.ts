@@ -1,15 +1,16 @@
-import * as types from "./types";
+import { ADD } from "./types";
+import { TextMap } from "../../types";
 
 export interface AddAction {
-    type: typeof types.ADD,
-    payload: types.TextMap
+    type: typeof ADD,
+    payload: TextMap
 };
 
 export type TextsAction = AddAction;
 
-export function add(texts: types.TextMap): AddAction {
+export function add(texts: TextMap): AddAction {
     return {
-        type: types.ADD,
+        type: ADD,
         payload: texts
     }
 }

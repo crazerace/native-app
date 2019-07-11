@@ -1,9 +1,10 @@
-import * as types from "./types";
+import { ADD } from "./types";
+import { TextMap } from "../../types";
 import { TextsAction } from "./actions";
 
 export interface TextsState {
     loaded: boolean,
-    data: types.TextMap
+    data: TextMap
 };
 
 const initalState: TextsState = {
@@ -13,14 +14,14 @@ const initalState: TextsState = {
 
 function reducer(state: TextsState = initalState, action: TextsAction): TextsState {
     switch (action.type) {
-        case types.ADD:
+        case ADD:
             return addTexts(state, action.payload);
         default:
             return state;
     }
 };
 
-function addTexts(state: TextsState, texts: types.TextMap): TextsState {
+function addTexts(state: TextsState, texts: TextMap): TextsState {
     return {
         ...state,
         loaded: true,

@@ -1,20 +1,34 @@
 import React, { Component } from "react";
-import { Text, View } from "react-native";
-import TranslatedText from "../../components/translatedText";
+import { connect } from "react-redux";
+import log from "@czarsimon/remotelogger";
+import { AppState } from "../../state";
+import { TextGetter } from "../../types";
+import { translatedText } from "../../service/texts";
+import Register from "./components";
+import { NewUserRequest } from "./types";
 
-interface Props { };
+interface Props {
+    translatedTexts: TextGetter
+};
 
 class RegisterContainer extends Component<Props> {
-    render() {
+    private signUp(user: NewUserRequest) {
+        log.debug(`Creating new user: ${user.username}`);
+    }
+
+    public render(): React.ReactNode {
         return (
-            <View>
-                <Text>Register</Text>
-                <TranslatedText textKey="USERNAME_PLACEHOLDER" />
-                <TranslatedText textKey="PASSWORD_PLACEHOLDER" />
-                <TranslatedText textKey="REPEAT_PASSWORD_PLACEHOLDER" />
-            </View>
+            <Register
+                texts={this.props.translatedTexts}
+                signUp={this.signUp} />
         );
     }
 };
 
-export default RegisterContainer;
+function mapStateToProps(state: AppState): Props {
+    return {
+        translatedTexts: translatedText(state.texts),
+    };
+};
+
+export default connect(mapStateToProps)(RegisterContainer);
