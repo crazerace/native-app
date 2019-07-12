@@ -1,36 +1,39 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import log from "@czarsimon/remotelogger";
 import { AppState } from "../../state";
+import { closeError } from "../../state/error";
 import { TextGetter, Error } from "../../types";
 import { translatedText } from "../../service/texts";
 import ErrorModal from "./components";
 
-interface Props {
+interface StateProps {
     texts: TextGetter
     error?: Error
 };
 
-class ErrorContainer extends Component<Props> {
-    private closeError = () => {
-        const { error } = this.props;
-        log.debug(`User closed error: ${error!.errorId}`);
-    }
-
-    public render(): React.ReactNode {
-        const { error, texts } = this.props;
-        return (
-            <ErrorModal error={error} texts={texts} close={this.closeError} />
-        );
-    }
-};
-
-function mapStateToProps(state: AppState): Props {
+function errorSelector(state: AppState): StateProps {
     const { texts, error } = state;
     return {
         texts: translatedText(texts),
         ...error
-    };
+    }
 };
 
-export default connect(mapStateToProps)(ErrorContainer);
+function ErrorContainer() {
+    const { error, texts } = useSelector(errorSelector);
+    const dispatch = useDispatch();
+    const close = useCallback(
+        () => {
+            log.debug(`User closed error: ${error!.errorId}`);
+            dispatch(closeError());
+        },
+        [dispatch]
+    );
+
+    return (
+        <ErrorModal error={error} texts={texts} close={close} />
+    );
+};
+
+export default ErrorContainer;
