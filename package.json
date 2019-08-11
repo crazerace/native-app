@@ -27,7 +27,8 @@
     "redux-thunk": "^2.3.0",
     "typesafe-actions": "^4.4.2",
     "uuid": "^3.3.2",
-    "whatwg-url": "^7.0.0"
+    "whatwg-url": "^7.0.0",
+    "ws": "^7.1.1"
   },
   "devDependencies": {
     "@types/jest": "24.0.15",
