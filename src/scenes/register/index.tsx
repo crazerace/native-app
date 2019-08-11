@@ -22,7 +22,7 @@ function RegisterContainer() {
     const dispatch = useDispatch();
 
     const handleSignUp = (user: NewUserRequest) => {
-        const err = validate(user);
+        const err = validate(user, texts);
         setError(err);
         if (err !== undefined) {
             return;
@@ -39,17 +39,21 @@ function RegisterContainer() {
 export default RegisterContainer;
 
 
-function validate(user: NewUserRequest): Optional<string> {
+function validate(user: NewUserRequest, texts: TextGetter): Optional<string> {
     const { username, password, repPassword } = user;
-    if (username.length < 1 || username.length > 100) {
-        return "Username must be between 0 and 100 characters"
+    if (!username) {
+        return texts("ERROR_EMPTY_USERNAME")
+    }
+
+    if (username.length > 100) {
+        return texts("ERROR_TOO_LONG_USERNAME")
     }
 
     if (password.length < 8) {
-        return "Password must be at least 8 characters"
+        return texts("ERROR_TOO_SHORT_PASSWORD")
     }
 
     if (password !== repPassword) {
-        return "Passwords do not match"
+        return texts("ERROR_PASSWORD_MISMATCH")
     }
 }

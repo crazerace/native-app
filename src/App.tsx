@@ -24,7 +24,7 @@ export default class App extends Component<Props> {
           <Provider store={store}>
             <View style={styles.container}>
               <ErrorContainer />
-              <LoginContainer />
+              <RegisterContainer />
             </View >
           </Provider>
         </Layout>

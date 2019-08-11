@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Text, Input, Button } from 'react-native-ui-kitten';
 import { NewUserRequest, TextGetter, Optional } from "@src/types";
+import InputError from "../../../components/inputError";
 
 
 interface Props {
@@ -38,10 +39,7 @@ export default function Register(props: Props) {
             <Button onPressOut={submit}>
                 {texts("REGISTER_BUTTON")}
             </Button>
-            {(error) ?
-                <Text status="danger">{error}</Text> :
-                <View />
-            }
+            <InputError error={error} />
         </View>
     );
 };

@@ -22,7 +22,7 @@ function LoginContainer() {
     const dispatch = useDispatch();
 
     const handleLogin = (credentials: LoginRequest) => {
-        const err = validate(credentials);
+        const err = validate(credentials, texts);
         setError(err);
         if (err !== undefined) {
             return;
@@ -39,9 +39,9 @@ function LoginContainer() {
 export default LoginContainer;
 
 
-function validate(user: LoginRequest): Optional<string> {
+function validate(user: LoginRequest, texts: TextGetter): Optional<string> {
     const { username } = user;
     if (!username) {
-        return "Username can't be empty"
+        return texts("ERROR_EMPTY_USERNAME")
     }
 }

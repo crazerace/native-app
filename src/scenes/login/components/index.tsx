@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Text, Input, Button } from 'react-native-ui-kitten';
 import { LoginRequest, TextGetter, Optional } from "@src/types";
+import InputError from "../../../components/inputError";
 
 
 interface Props {
@@ -34,10 +35,7 @@ export default function Login(props: Props) {
             <Button onPressOut={submit}>
                 {texts("LOGIN_BUTTON")}
             </Button>
-            {(error) ?
-                <Text status="danger">{error}</Text> :
-                <View />
-            }
+            <InputError error={error} />
         </View>
     );
 };
