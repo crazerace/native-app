@@ -1,3 +1,10 @@
+import { ThunkAction, ThunkDispatch } from 'redux-thunk'
+import { AnyAction } from 'redux';
+
+// Redux types
+export type Thunk<T = void> = ThunkAction<Promise<T>, {}, {}, AnyAction>;
+export type Dispatch = ThunkDispatch<{}, {}, AnyAction>;
+
 // DTO types.
 
 export interface TextMap {

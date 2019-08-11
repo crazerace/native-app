@@ -2,7 +2,14 @@ import AsyncStorage from '@react-native-community/async-storage';
 import uuid from "uuid/v4";
 import httpclient from "@czarsimon/httpclient";
 import log from "@czarsimon/remotelogger";
-import { DEV_MODE, APP_NAME, APP_VERSION, CLIENT_ID_KEY } from "../constants";
+import {
+    DEV_MODE,
+    APP_NAME,
+    APP_VERSION,
+    CLIENT_ID_KEY,
+    AUTH_TOKEN_KEY,
+    USER_ID_KEY
+} from "../constants";
 import { createApiUrl } from "../service/api";
 
 interface Client {
@@ -13,7 +20,7 @@ interface Client {
 }
 
 function initLogAndHttpclient(client: Client) {
-    httpclient.configure({ clientId: client.id });
+    httpclient.configure({ clientId: client.id, authToken: client.authToken });
     log.configure({
         url: createApiUrl("/httplogger/v1/logs"),
         app: APP_NAME,
@@ -25,12 +32,20 @@ function initLogAndHttpclient(client: Client) {
 };
 
 async function getClientInfo(): Promise<Client> {
-    const clientId = await getOrCreateId(CLIENT_ID_KEY);
+    const [clientId, authToken, userId] = await Promise.all([
+        getOrCreateId(CLIENT_ID_KEY),
+        AsyncStorage.getItem(AUTH_TOKEN_KEY),
+        AsyncStorage.getItem(USER_ID_KEY)
+    ]);
 
-    return {
+    const client = {
         id: clientId,
         sessionId: uuid()
-    }
+    };
+
+    return (authToken && userId) ?
+        { ...client, authToken, userId } :
+        client;
 };
 
 async function getOrCreateId(key: string): Promise<string> {
