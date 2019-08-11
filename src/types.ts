@@ -20,7 +20,6 @@ export interface NewUserRequest {
 export interface LoginRequest {
     username: string
     password: string
-    repPassword: string
 };
 
 export interface Credentials {

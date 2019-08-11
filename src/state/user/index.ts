@@ -1,6 +1,6 @@
 import reducer from './reducer';
 
 export { addCredentials } from './actions';
-export { signUp } from './operations';
+export { signUp, login } from './operations';
 
 export default reducer;

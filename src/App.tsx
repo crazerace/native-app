@@ -6,6 +6,7 @@ import { ApplicationProvider, Layout } from 'react-native-ui-kitten';
 import log from "@czarsimon/remotelogger";
 import store, { initState } from "./state";
 import RegisterContainer from './scenes/register';
+import LoginContainer from './scenes/login'
 import ErrorContainer from "./components/error";
 
 interface Props { };
@@ -23,7 +24,7 @@ export default class App extends Component<Props> {
           <Provider store={store}>
             <View style={styles.container}>
               <ErrorContainer />
-              <RegisterContainer />
+              <LoginContainer />
             </View >
           </Provider>
         </Layout>
