@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { View } from 'react-native';
 import { Text, Input, Button } from 'react-native-ui-kitten';
 import { NewUserRequest, TextGetter, Optional } from "@src/types";
@@ -10,56 +10,38 @@ interface Props {
     error: Optional<string>
 };
 
-type State = NewUserRequest;
+export default function Register(props: Props) {
+    const [username, updateUsername] = useState<string>("");
+    const [password, updatePassword] = useState<string>("");
+    const [repPassword, updateRepPassword] = useState<string>("");
 
-export default class Register extends Component<Props, State> {
-    public state: State = {
-        username: "",
-        password: "",
-        repPassword: ""
-    };
-
-    private updateUsername = (username: string) => {
-        this.setState({ username });
+    const submit = () => {
+        props.signUp({ username, password, repPassword });
     }
 
-    private updatePassword = (password: string) => {
-        this.setState({ password });
-    }
-
-    private updateRepPassword = (repPassword: string) => {
-        this.setState({ repPassword });
-    }
-
-    private submit = () => {
-        this.props.signUp(this.state);
-    }
-
-    public render(): React.ReactNode {
-        const { texts, error } = this.props;
-        return (
-            <View>
-                <Text category='h4'>Crazerace</Text>
-                <Input
-                    onChangeText={this.updateUsername}
-                    autoCapitalize="none"
-                    placeholder={texts("USERNAME_PLACEHOLDER")} />
-                <Input
-                    onChangeText={this.updatePassword}
-                    secureTextEntry={true}
-                    placeholder={texts("PASSWORD_PLACEHOLDER")} />
-                <Input
-                    onChangeText={this.updateRepPassword}
-                    secureTextEntry={true}
-                    placeholder={texts("REPEAT_PASSWORD_PLACEHOLDER")} />
-                <Button onPressOut={this.submit}>
-                    {texts("REGISTER_BUTTON")}
-                </Button>
-                {(error) ?
-                    <Text status="danger">{error}</Text> :
-                    <View />
-                }
-            </View>
-        );
-    }
-}
+    const { texts, error } = props;
+    return (
+        <View>
+            <Text category='h4'>Crazerace</Text>
+            <Input
+                onChangeText={updateUsername}
+                autoCapitalize="none"
+                placeholder={texts("USERNAME_PLACEHOLDER")} />
+            <Input
+                onChangeText={updatePassword}
+                secureTextEntry={true}
+                placeholder={texts("PASSWORD_PLACEHOLDER")} />
+            <Input
+                onChangeText={updateRepPassword}
+                secureTextEntry={true}
+                placeholder={texts("REPEAT_PASSWORD_PLACEHOLDER")} />
+            <Button onPressOut={submit}>
+                {texts("REGISTER_BUTTON")}
+            </Button>
+            {(error) ?
+                <Text status="danger">{error}</Text> :
+                <View />
+            }
+        </View>
+    );
+};
