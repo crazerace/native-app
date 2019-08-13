@@ -5,13 +5,10 @@ import { mapping, light as lightTheme } from "@eva-design/eva";
 import { ApplicationProvider, Layout } from 'react-native-ui-kitten';
 import log from "@czarsimon/remotelogger";
 import store, { initState } from "./state";
-import RegisterContainer from './scenes/register';
-import LoginContainer from './scenes/login'
+import SignIn from './scenes/signin'
 import ErrorContainer from "./components/error";
 
-interface Props { };
-
-export default class App extends Component<Props> {
+export default class App extends Component<{}> {
   public async componentDidMount() {
     await initState();
     log.info("Main component [App] mounted");
@@ -24,8 +21,8 @@ export default class App extends Component<Props> {
           <Provider store={store}>
             <View style={styles.container}>
               <ErrorContainer />
-              <RegisterContainer />
-            </View >
+              <SignIn />
+            </View>
           </Provider>
         </Layout>
       </ApplicationProvider>

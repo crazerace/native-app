@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "@src/state";
 import { NewUserRequest, TextGetter, Optional } from "@src/types";
-import { translatedText } from "../../service/texts";
-import { signUp } from "../../state/user";
+import { translatedText } from "../../../../service/texts";
+import { signUp } from "../../../../state/user";
 import Register from "./components";
 
 interface StateProps {

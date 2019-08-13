@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-ui-kitten';
-import { Optional } from "@src/types";
+import { Optional } from "../../../types";
 
 interface Props {
     error: Optional<string>
@@ -23,9 +23,7 @@ export default function InputError(props: Props) {
 
 const style = StyleSheet.create({
     error: {
-        alignContent: "center",
-        padding: 10,
-        marginTop: 5
+        marginTop: 15
     },
     text: {
         textAlign: "center"
