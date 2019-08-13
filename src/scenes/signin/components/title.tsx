@@ -11,7 +11,6 @@ export default function Title() {
 const style = StyleSheet.create({
     title: {
         textAlign: "center",
-        marginTop: 100,
-        marginBottom: 20
+        marginVertical: 20
     }
 });

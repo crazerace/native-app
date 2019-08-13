@@ -5,7 +5,8 @@ import { mapping, light as lightTheme } from "@eva-design/eva";
 import { ApplicationProvider, Layout } from 'react-native-ui-kitten';
 import log from "@czarsimon/remotelogger";
 import store, { initState } from "./state";
-import SignIn from './scenes/signin'
+
+import Router from "./scenes/router";
 import ErrorContainer from "./components/error";
 
 export default class App extends Component<{}> {
@@ -21,7 +22,7 @@ export default class App extends Component<{}> {
           <Provider store={store}>
             <View style={styles.container}>
               <ErrorContainer />
-              <SignIn />
+              <Router />
             </View>
           </Provider>
         </Layout>
@@ -34,7 +35,5 @@ export default class App extends Component<{}> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    marginHorizontal: '5%'
   }
 });

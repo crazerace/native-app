@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useSelector } from "react-redux";
 import { AppState } from "@src/state";
 import { TextGetter } from "@src/types";
@@ -26,7 +26,7 @@ export default function SignIn() {
     const gotoText = (register) ? texts("LOGIN_BUTTON") : texts("REGISTER_BUTTON")
 
     return (
-        <View>
+        <View style={styles.container}>
             <Title />
             {(register) ? <RegisterContainer /> : <LoginContainer />}
             <Toggle
@@ -36,3 +36,11 @@ export default function SignIn() {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        marginHorizontal: '5%'
+    }
+});
