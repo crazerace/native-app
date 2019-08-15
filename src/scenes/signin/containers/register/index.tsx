@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "@src/state";
-import { NewUserRequest, TextGetter, Optional } from "@src/types";
+import { NewUserRequest, TextGetter, Optional, NavigationCallback } from "@src/types";
 import { translatedText } from "../../../../service/texts";
 import { signUp } from "../../../../state/user";
 import Register from "./components";
+
+interface Props {
+    navigate: NavigationCallback
+};
 
 interface StateProps {
     texts: TextGetter
@@ -16,7 +20,7 @@ function registerSelector(state: AppState): StateProps {
     };
 };
 
-function RegisterContainer() {
+export default function RegisterContainer(props: Props) {
     const [error, setError] = useState<Optional<string>>(undefined);
     const { texts } = useSelector(registerSelector);
     const dispatch = useDispatch();
@@ -28,15 +32,13 @@ function RegisterContainer() {
             return;
         };
 
-        dispatch(signUp(user));
+        dispatch(signUp(user, props.navigate));
     };
 
     return (
         <Register texts={texts} signUp={handleSignUp} error={error} />
     );
 };
-
-export default RegisterContainer;
 
 
 function validate(user: NewUserRequest, texts: TextGetter): Optional<string> {

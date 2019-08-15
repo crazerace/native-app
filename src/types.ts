@@ -1,9 +1,20 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux';
+import {
+    NavigationParams,
+    NavigationScreenProp,
+    NavigationState,
+} from 'react-navigation';
 
-// Redux types
+// Redux types.
+
 export type Thunk<T = void> = ThunkAction<Promise<T>, {}, {}, AnyAction>;
 export type Dispatch = ThunkDispatch<{}, {}, AnyAction>;
+
+// Navigation types.
+
+export type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;
+export type NavigationCallback = (success: boolean) => void;
 
 // DTO types.
 
@@ -22,9 +33,15 @@ export interface LoginRequest {
     password: string
 };
 
+export interface RenewRequest {
+    userId: string
+    token: string
+};
+
 export interface Credentials {
     userId: string
     token: string
+    renewToken: string
 };
 
 export interface User {

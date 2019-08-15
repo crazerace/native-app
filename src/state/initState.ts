@@ -7,20 +7,18 @@ import {
     APP_NAME,
     APP_VERSION,
     CLIENT_ID_KEY,
-    AUTH_TOKEN_KEY,
-    USER_ID_KEY
+    USER_ID_KEY,
+    RENEW_TOKEN_KEY
 } from "../constants";
 import { createApiUrl } from "../service/api";
 
 interface Client {
     id: string
     sessionId: string
-    authToken?: string
-    userId?: string
 }
 
 function initLogAndHttpclient(client: Client) {
-    httpclient.configure({ clientId: client.id, authToken: client.authToken });
+    httpclient.configure({ clientId: client.id });
     log.configure({
         url: createApiUrl("/httplogger/v1/logs"),
         app: APP_NAME,
@@ -32,21 +30,19 @@ function initLogAndHttpclient(client: Client) {
 };
 
 async function getClientInfo(): Promise<Client> {
-    const [clientId, authToken, userId] = await Promise.all([
-        getOrCreateId(CLIENT_ID_KEY),
-        AsyncStorage.getItem(AUTH_TOKEN_KEY),
-        AsyncStorage.getItem(USER_ID_KEY)
-    ]);
-
-    const client = {
+    const clientId = await getOrCreateId(CLIENT_ID_KEY);
+    // await logout();
+    return {
         id: clientId,
         sessionId: uuid()
     };
-
-    return (authToken && userId) ?
-        { ...client, authToken, userId } :
-        client;
 };
+
+async function logout() {
+    console.log("before AsyncStorage.multiRemove");
+    await AsyncStorage.multiRemove([USER_ID_KEY, RENEW_TOKEN_KEY]);
+    console.log("after AsyncStorage.multiRemove");
+}
 
 async function getOrCreateId(key: string): Promise<string> {
     const newId = uuid();

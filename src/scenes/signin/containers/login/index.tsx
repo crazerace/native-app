@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "@src/state";
-import { LoginRequest, TextGetter, Optional } from "@src/types";
+import { LoginRequest, TextGetter, Optional, NavigationCallback } from "@src/types";
 import { translatedText } from "../../../../service/texts";
 import { login } from "../../../../state/user";
 import Login from "./components";
+
+interface Props {
+    navigate: NavigationCallback
+};
 
 interface StateProps {
     texts: TextGetter
@@ -16,7 +20,7 @@ function loginSelector(state: AppState): StateProps {
     };
 };
 
-function LoginContainer() {
+export default function LoginContainer(props: Props) {
     const [error, setError] = useState<Optional<string>>(undefined);
     const { texts } = useSelector(loginSelector);
     const dispatch = useDispatch();
@@ -28,15 +32,13 @@ function LoginContainer() {
             return;
         };
 
-        dispatch(login(credentials));
+        dispatch(login(credentials, props.navigate));
     };
 
     return (
         <Login texts={texts} login={handleLogin} error={error} />
     );
 };
-
-export default LoginContainer;
 
 
 function validate(user: LoginRequest, texts: TextGetter): Optional<string> {
