@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useSelector } from "react-redux";
+import log from "@czarsimon/remotelogger";
 import { AppState } from "@src/state";
 import { TextGetter, Optional } from "@src/types";
 import { translatedText } from "../../service/texts";
@@ -19,8 +20,9 @@ function mainMenuSelector(state: AppState): StateProps {
 };
 
 export default function MainMenu() {
-    const [error, setError] = useState<Optional<string>>(undefined);
+    const [error, _] = useState<Optional<string>>(undefined);
     const { texts } = useSelector(mainMenuSelector);
+    log.info("MainMenu loaded");
     return (
         <View style={styles.container}>
             <Title />
