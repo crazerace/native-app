@@ -2,9 +2,21 @@ import { createStackNavigator, createSwitchNavigator, createAppContainer } from 
 import SignInScreen from "./signin";
 import MainMenuScreen from "./mainMenu";
 import AuthLoaderScreen from "./authLoader";
+import SettingsContainer from "./settings";
 
-const AppStack = createStackNavigator({ MainMenu: MainMenuScreen });
-const AuthStack = createStackNavigator({ SignIn: SignInScreen });
+const AppStack = createStackNavigator(
+    {
+        MainMenu: MainMenuScreen,
+        Settings: SettingsContainer
+    },
+    {
+        initialRouteName: "MainMenu"
+    }
+);
+
+const AuthStack = createStackNavigator({
+    SignIn: SignInScreen
+});
 
 const AppNavigator = createSwitchNavigator(
     {

@@ -10,7 +10,8 @@ const initalState: UserState = {
 };
 
 const reducer = createReducer<UserState, UserAction>(initalState)
-    .handleAction(actions.addCredentials, (state, action) => addCredentials(state, action.payload));
+    .handleAction(actions.addCredentials, (state, action) => addCredentials(state, action.payload))
+    .handleAction(actions.removeCredentials, (state, _) => ({ ...state, ...initalState }));
 
 function addCredentials(state: UserState, credentials: Credentials): UserState {
     return {

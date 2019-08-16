@@ -1,36 +1,32 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-ui-kitten';
-import { TextGetter, Optional } from "@src/types";
+import { Button } from 'react-native-ui-kitten';
+import { TextGetter } from "@src/types";
+import Title from "../../../components/title";
 
 interface Props {
     texts: TextGetter
-    error: Optional<string>
+    createGame: () => void
+    joinGame: () => void
 };
 
-function MainMenuContainer(props: Props) {
-
-    const { texts, error } = props;
+export default function MainMenu(props: Props) {
+    const { texts, createGame, joinGame } = props;
     return (
         <View>
-            <Button style={style.input} >
-                {texts("JOIN_GAME_BUTTON")}
-            </Button>
-            <Button style={style.input}>
+            <Title />
+            <Button onPressOut={createGame} style={style.button}>
                 {texts("CREATE_GAME_BUTTON")}
             </Button>
-            {(error) ?
-                <Text status="danger">{error}</Text> :
-                <View />
-            }
+            <Button onPressOut={joinGame} style={style.button} >
+                {texts("JOIN_GAME_BUTTON")}
+            </Button>
         </View>
     );
 };
 
 const style = StyleSheet.create({
-    input: {
-        marginBottom: 5
+    button: {
+        marginBottom: 10
     }
 });
-
-export default MainMenuContainer;

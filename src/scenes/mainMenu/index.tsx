@@ -1,32 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useSelector } from "react-redux";
 import log from "@czarsimon/remotelogger";
 import { AppState } from "@src/state";
-import { TextGetter, Optional } from "@src/types";
+import { TextGetter } from "@src/types";
 import { translatedText } from "../../service/texts";
-import MainMenuContainer from "./components/index";
-import Title from '../signin/components/title';
+import MainMenu from "./components";
 
 
 interface StateProps {
     texts: TextGetter
 };
 
-function mainMenuSelector(state: AppState): StateProps {
+function selector(state: AppState): StateProps {
     return {
         texts: translatedText(state.texts),
     };
 };
 
-export default function MainMenu() {
-    const [error, _] = useState<Optional<string>>(undefined);
-    const { texts } = useSelector(mainMenuSelector);
-    log.info("MainMenu loaded");
+export default function MainMenuContainer() {
+    const { texts } = useSelector(selector);
+    const createGame = () => {
+        log.debug("MainMenu: Selected CREATE_GAME");
+    };
+
+    const joinGame = () => {
+        log.debug("MainMenu: Selected JOIN_GAME");
+    };
+
     return (
         <View style={styles.container}>
-            <Title />
-            <MainMenuContainer texts={texts} error={error} />
+            <MainMenu
+                texts={texts}
+                joinGame={joinGame}
+                createGame={createGame} />
         </View>
     );
 

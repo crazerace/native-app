@@ -4,7 +4,7 @@ import log from '@czarsimon/remotelogger';
 import { NewUserRequest, Credentials, RenewRequest, Optional, Thunk, Dispatch, LoginRequest, NavigationCallback } from "@src/types";
 import { USER_ID_KEY, RENEW_TOKEN_KEY } from "../../constants";
 import { createApiUrl } from "../../service/api";
-import { addCredentials } from "./actions";
+import { addCredentials, removeCredentials } from "./actions";
 
 export const signUp = (credentials: NewUserRequest, callback: NavigationCallback): Thunk<void> => {
     return async (dispatch: Dispatch): Promise<void> => {
@@ -72,6 +72,15 @@ export const renewToken = (renewRequest: RenewRequest, callback: NavigationCallb
     };
 };
 
+export const logOut = (callback: () => void): Thunk<void> => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        const userId = await clearCredentials();
+        dispatch(removeCredentials());
+        log.info(`Logged out user: ${userId}`);
+        callback();
+    };
+};
+
 function handleSignupError(username: string, error: Optional<any>, status: number) {
     if (!error) {
         log.debug(`Failed to create user: ${username}. Status: ${status}. Error=undefined`);
@@ -109,4 +118,12 @@ async function storeCredentials(credentials: Credentials): Promise<any> {
         AsyncStorage.setItem(USER_ID_KEY, userId),
         AsyncStorage.setItem(RENEW_TOKEN_KEY, renewToken),
     ]);
+};
+
+async function clearCredentials(): Promise<string | null> {
+    const userId = await AsyncStorage.getItem(USER_ID_KEY);
+    AsyncStorage.removeItem(USER_ID_KEY);
+    AsyncStorage.removeItem(RENEW_TOKEN_KEY);
+
+    return userId;
 };

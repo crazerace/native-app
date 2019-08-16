@@ -7,7 +7,7 @@ import { translatedText } from "../../service/texts";
 import LoginContainer from "./containers/login";
 import RegisterContainer from "./containers/register";
 import Toggle from "./components/toggle";
-import Title from "./components/title";
+import Title from "../../components/title";
 
 interface Props {
     navigation: Navigation
