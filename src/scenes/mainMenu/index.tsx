@@ -1,30 +1,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useSelector } from "react-redux";
 import log from "@czarsimon/remotelogger";
-import { AppState } from "@src/state";
-import { TextGetter } from "@src/types";
-import { translatedText } from "../../service/texts";
 import MainMenu from "./components";
-
-
-interface StateProps {
-    texts: TextGetter
-};
-
-function selector(state: AppState): StateProps {
-    return {
-        texts: translatedText(state.texts),
-    };
-};
+import { useTexts } from '../../state/hooks';
 
 export default function MainMenuContainer() {
-    const { texts } = useSelector(selector);
-    const createGame = () => {
+    const { texts } = useTexts();
+    function createGame() {
         log.debug("MainMenu: Selected CREATE_GAME");
     };
 
-    const joinGame = () => {
+    function joinGame() {
         log.debug("MainMenu: Selected JOIN_GAME");
     };
 

@@ -24,7 +24,7 @@ export async function fetchTexts(): Promise<Optional<TextMap>> {
         const url = createApiUrl(`/textservice/v1/texts/group/${TEXT_GROUP}`);
         const { body, error } = await httpclient.get<TextMap>({ url, useAuth: false });
         if (body) {
-            log.info("Translated texts loaded");
+            log.debug("Translated texts loaded");
             return body;
         } else {
             const errorMessage = (error) ? error.message : "No body returned for translated texts";

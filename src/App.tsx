@@ -12,7 +12,7 @@ import ErrorContainer from "./components/error";
 export default class App extends Component<{}> {
   public async componentDidMount() {
     await initState();
-    log.info("Main component [App] mounted");
+    log.debug("Main component [App] mounted");
   };
 
   public render(): React.ReactNode {

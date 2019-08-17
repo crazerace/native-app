@@ -9,7 +9,7 @@ interface Props {
 export default function LogoutButton(props: Props) {
     const { text, logOut } = props;
     return (
-        <Button onPressOut={logOut}>
+        <Button onPressOut={logOut} appearance="outline" status="white">
             {text}
         </Button>
     );

@@ -1,28 +1,17 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { AppState } from "@src/state";
+import { useDispatch } from "react-redux";
 import { NewUserRequest, TextGetter, Optional, NavigationCallback } from "@src/types";
-import { translatedText } from "../../../../service/texts";
 import { signUp } from "../../../../state/user";
 import Register from "./components";
+import { useTexts } from "../../../../state/hooks";
 
 interface Props {
     navigate: NavigationCallback
 };
 
-interface StateProps {
-    texts: TextGetter
-};
-
-function registerSelector(state: AppState): StateProps {
-    return {
-        texts: translatedText(state.texts),
-    };
-};
-
 export default function RegisterContainer(props: Props) {
+    const { texts } = useTexts();
     const [error, setError] = useState<Optional<string>>(undefined);
-    const { texts } = useSelector(registerSelector);
     const dispatch = useDispatch();
 
     const handleSignUp = (user: NewUserRequest) => {

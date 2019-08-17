@@ -80,3 +80,7 @@ export interface UserState {
 
 export type Optional<T> = (T | undefined);
 export type TextGetter = (key: string) => Optional<string>;
+
+export interface TextProps {
+    texts: TextGetter
+}

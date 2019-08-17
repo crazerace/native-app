@@ -19,7 +19,7 @@ export const signUp = (credentials: NewUserRequest, callback: NavigationCallback
             callback(false);
             return;
         }
-        log.info(`Creating new user: ${credentials.username}`);
+        log.debug(`Creating new user: ${credentials.username}`);
 
         httpclient.configure({ authToken: body.token });
         await storeCredentials(body);
@@ -41,7 +41,7 @@ export const login = (credentials: LoginRequest, callback: NavigationCallback): 
             callback(false);
             return;
         }
-        log.info(`Logged in user: ${credentials.username}`);
+        log.debug(`Logged in user: ${credentials.username}`);
 
         httpclient.configure({ authToken: body.token });
         await storeCredentials(body);
@@ -63,7 +63,7 @@ export const renewToken = (renewRequest: RenewRequest, callback: NavigationCallb
             callback(false);
             return;
         }
-        log.info(`Renewed credentials for user: ${renewRequest.userId}`);
+        log.debug(`Renewed credentials for user: ${renewRequest.userId}`);
 
         httpclient.configure({ authToken: body.token });
         await storeCredentials(body);
@@ -76,7 +76,7 @@ export const logOut = (callback: () => void): Thunk<void> => {
     return async (dispatch: Dispatch): Promise<void> => {
         const userId = await clearCredentials();
         dispatch(removeCredentials());
-        log.info(`Logged out user: ${userId}`);
+        log.debug(`Logged out user: ${userId}`);
         callback();
     };
 };
