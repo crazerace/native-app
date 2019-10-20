@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-ui-kitten';
 import Title from "../../../components/title";
-import { useTexts } from '@src/state/hooks';
+import { useTexts } from '../../../state/hooks';
 
 interface Props {
     createGame: () => void

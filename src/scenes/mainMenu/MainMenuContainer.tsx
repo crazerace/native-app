@@ -35,7 +35,6 @@ export default function MainMenuContainer({ navigation }: Props) {
             <CreateGameContainer isOpen={createGameOpen} close={close} navigate={goToGameLobby} />
         </View>
     );
-
 };
 
 const styles = StyleSheet.create({

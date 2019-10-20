@@ -2,7 +2,7 @@ import React from 'react';
 import CreateGame from './components/CreateGame';
 import { NewGameRequest } from '@src/types';
 import { useDispatch } from 'react-redux';
-import { createGame } from '@src/state/game/operations';
+import { createGame } from '../../../../state/game';
 
 interface Props {
     isOpen: boolean,

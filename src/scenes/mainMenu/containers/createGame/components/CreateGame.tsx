@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Modal } from 'react-native';
 import { Input, Button, Text } from 'react-native-ui-kitten';
 import { NewGameRequest } from "@src/types";
-import { useTexts } from '@src/state/hooks';
+import { useTexts } from '../../../../../state/hooks';
 
 
 interface Props {
