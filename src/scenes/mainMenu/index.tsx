@@ -5,7 +5,7 @@ import MainMenu from "./components";
 import { useTexts } from '../../state/hooks';
 
 export default function MainMenuContainer() {
-    const { texts } = useTexts();
+    const texts = useTexts();
     function createGame() {
         log.debug("MainMenu: Selected CREATE_GAME");
     };

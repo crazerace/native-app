@@ -12,7 +12,7 @@ interface Props {
 };
 
 export default function SignIn(props: Props) {
-    const { texts } = useTexts();
+    const texts = useTexts();
     const [register, setRegister] = useState(true);
     const toggleText = (register) ? texts("ALREADY_HAS_ACCOUNT") : texts("DOES_NOT_HAVE_ACCOUNT")
     const gotoText = (register) ? texts("LOGIN_BUTTON") : texts("REGISTER_BUTTON")

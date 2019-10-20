@@ -10,7 +10,7 @@ interface Props {
 };
 
 export default function RegisterContainer(props: Props) {
-    const { texts } = useTexts();
+    const texts = useTexts();
     const [error, setError] = useState<Optional<string>>(undefined);
     const dispatch = useDispatch();
 
