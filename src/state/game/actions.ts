@@ -1,6 +1,6 @@
 import { createStandardAction } from 'typesafe-actions';
-import { GameInfo } from "../../types";
+import { Game } from "../../types";
 
-export const ADD_GAME_INFO: string = "crazerace/game/ADD_GAME_INFO";
+export const ADD_GAME: string = "crazerace/game/ADD_GAME";
 
-export const addGameInfo = createStandardAction(ADD_GAME_INFO)<GameInfo>();
+export const addGame = createStandardAction(ADD_GAME)<Game>();
