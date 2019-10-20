@@ -6,42 +6,47 @@ import CreateGameContainer from "./containers/createGame";
 import { Navigation } from "@src/types";
 
 interface Props {
-    navigation: Navigation
+  navigation: Navigation
 }
 
 export default function MainMenuContainer({ navigation }: Props) {
-    const [createGameOpen, setCreateGameOpen] = useState(false);
+  const [createGameOpen, setCreateGameOpen] = useState(false);
+  const [joinGameOpen, setJoinGameOpen] = useState(false);
 
-    function createGame() {
-        log.debug("MainMenu: Selected CREATE_GAME");
-        setCreateGameOpen(true);
-    };
+  function createGame() {
+    log.debug("MainMenuContainer: Opened CreateGame modal");
+    setCreateGameOpen(true);
+    setJoinGameOpen(false);
+  };
 
-    function joinGame() {
-        log.debug("MainMenu: Selected JOIN_GAME");
-    };
+  function joinGame() {
+    log.debug("MainMenuContainer: Opened JoinGame modal");
+    setJoinGameOpen(true);
+    setCreateGameOpen(false);
+  };
 
-    function close() {
-        setCreateGameOpen(false);
-    }
+  function close() {
+    setCreateGameOpen(false);
+    setJoinGameOpen(false);
+  }
 
-    function goToGameLobby() {
-        navigation.navigate("GameLobby");
-    }
+  function goToGameLobby() {
+    navigation.navigate("GameLobby");
+  }
 
-    return (
-        <View style={styles.container}>
-            <MainMenu joinGame={joinGame} createGame={createGame} />
-            <CreateGameContainer isOpen={createGameOpen} close={close} navigate={goToGameLobby} />
-        </View>
-    );
+  return (
+    <View style={styles.container}>
+      <MainMenu joinGame={joinGame} createGame={createGame} />
+      <CreateGameContainer isOpen={createGameOpen} close={close} navigate={goToGameLobby} />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        marginHorizontal: '5%',
-        marginBottom: '10%'
-    }
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    marginHorizontal: '5%',
+    marginBottom: '10%'
+  }
 });

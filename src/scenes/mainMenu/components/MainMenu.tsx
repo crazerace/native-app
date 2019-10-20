@@ -5,27 +5,27 @@ import Title from "../../../components/title";
 import { useTexts } from '../../../state/hooks';
 
 interface Props {
-    createGame: () => void
-    joinGame: () => void
+  createGame: () => void
+  joinGame: () => void
 };
 
 export default function MainMenu({ createGame, joinGame }: Props) {
-    const texts = useTexts();
-    return (
-        <View>
-            <Title />
-            <Button onPressOut={createGame} style={style.button}>
-                {texts("CREATE_GAME_BUTTON")}
-            </Button>
-            <Button onPressOut={joinGame} style={style.button} >
-                {texts("JOIN_GAME_BUTTON")}
-            </Button>
-        </View>
-    );
+  const texts = useTexts();
+  return (
+    <View>
+      <Title />
+      <Button onPressOut={createGame} style={style.button}>
+        {texts("CREATE_GAME_BUTTON")}
+      </Button>
+      <Button onPressOut={joinGame} style={style.button} >
+        {texts("JOIN_GAME_BUTTON")}
+      </Button>
+    </View>
+  );
 };
 
 const style = StyleSheet.create({
-    button: {
-        marginBottom: 10
-    }
+  button: {
+    marginBottom: 10
+  }
 });

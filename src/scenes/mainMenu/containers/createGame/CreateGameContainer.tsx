@@ -5,22 +5,28 @@ import { useDispatch } from 'react-redux';
 import { createGame } from '../../../../state/game';
 
 interface Props {
-    isOpen: boolean,
-    close: () => void,
-    navigate: () => void
+  isOpen: boolean
+  close: () => void
+  navigate: () => void
 }
 
 export default function CreateGameContainer({ isOpen, navigate, close }: Props) {
-    const dispatch = useDispatch();
-    const successCallback = () => {
-        close();
-        navigate();
-    }
+  const dispatch = useDispatch();
+  const successCallback = () => {
+    close();
+    navigate();
+  }
 
-    const onCreateGame = (game: NewGameRequest) => {
-        console.log(`Created game ${game.name}`)
-        dispatch(createGame(game, successCallback));
+  const onCreateGame = (game: NewGameRequest) => {
+    console.log(`Created game ${game.name}`)
+    dispatch(createGame(game, successCallback));
 
-    }
-    return <CreateGame createGame={onCreateGame} isOpen={isOpen} />;
+  }
+  return (
+    <CreateGame
+      createGame={onCreateGame}
+      isOpen={isOpen}
+      close={close}
+    />
+  );
 };

@@ -3,14 +3,14 @@ import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-ui-kitten';
 
 export default function Title() {
-    return (
-        <Text style={style.title} category="h1">Crazerace</Text>
-    );
+  return (
+    <Text style={styles.title} category="h1">Crazerace</Text>
+  );
 };
 
-const style = StyleSheet.create({
-    title: {
-        textAlign: "center",
-        marginVertical: 20
-    }
+const styles = StyleSheet.create({
+  title: {
+    textAlign: "center",
+    marginVertical: 20
+  }
 });
