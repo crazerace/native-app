@@ -1,13 +1,13 @@
 import { createStackNavigator, createSwitchNavigator, createAppContainer } from "react-navigation";
 import SignInScreen from "./signin";
-import MainMenuScreen from "./mainMenu";
+import MainMenuContainer from "./mainMenu";
 import AuthLoaderScreen from "./authLoader";
 import SettingsContainer from "./settings";
 import GameLobbyContainer from "./gameLobby";
 
 const AppStack = createStackNavigator(
     {
-        MainMenu: MainMenuScreen,
+        MainMenu: MainMenuContainer,
         Settings: SettingsContainer,
         GameLobby: GameLobbyContainer,
     },

@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-ui-kitten';
-import { TextGetter } from "@src/types";
 import Title from "../../../components/title";
+import { useTexts } from '@src/state/hooks';
 
 interface Props {
-    texts: TextGetter
     createGame: () => void
     joinGame: () => void
 };
 
-export default function MainMenu(props: Props) {
-    const { texts, createGame, joinGame } = props;
+export default function MainMenu({ createGame, joinGame }: Props) {
+    const texts = useTexts();
     return (
         <View>
             <Title />

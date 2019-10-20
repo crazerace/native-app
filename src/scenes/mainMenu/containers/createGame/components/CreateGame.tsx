@@ -1,32 +1,29 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Modal } from 'react-native';
 import { Input, Button, Text } from 'react-native-ui-kitten';
-import { NewGameRequest, TextGetter, Optional } from "@src/types";
+import { NewGameRequest } from "@src/types";
+import { useTexts } from '@src/state/hooks';
 
 
 interface Props {
+    isOpen: boolean
     createGame: (game: NewGameRequest) => void,
-    texts: TextGetter
     error?: string
-    open: boolean
 };
 
-export default function CreateGame(props: Props) {
+export default function CreateGame({ isOpen, createGame }: Props) {
+    const texts = useTexts();
     const [name, setName] = useState<string>("");
+    const submit = () => createGame({ name });
 
-    const submit = () => {
-        props.createGame({ name });
-    }
-
-    const { texts, error, open } = props;
     return (
         <View style={style.modal} >
             <Modal
                 animationType="fade"
                 transparent={false}
-                visible={open}
+                visible={isOpen}
             >
-                <View style={{marginTop: 22}} >
+                <View style={{ marginTop: 22 }} >
                     <Text>{texts("NEW_GAME_TITLE")}</Text>
                     <Input
                         style={style.input}
