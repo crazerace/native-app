@@ -1,10 +1,10 @@
-import { TextProps } from "@src/types";
+import { TextProps, TextGetter } from "@src/types";
 import { AppState } from ".";
 import { translatedText } from "../service/texts";
 import { useSelector } from "react-redux";
 
-export function useTexts(): TextProps {
-    return useSelector(textSelector);
+export function useTexts(): TextGetter {
+    return useSelector(textSelector).texts;
 }
 
 function textSelector(state: AppState): TextProps {

@@ -9,7 +9,7 @@ interface Props {
 };
 
 export default function SettingsContainer(props: Props) {
-    const { texts } = useTexts();
+    const texts = useTexts();
 
     return (
         <View style={styles.container}>
