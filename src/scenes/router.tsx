@@ -3,11 +3,13 @@ import SignInScreen from "./signin";
 import MainMenuScreen from "./mainMenu";
 import AuthLoaderScreen from "./authLoader";
 import SettingsContainer from "./settings";
+import GameLobbyContainer from "./gameLobby";
 
 const AppStack = createStackNavigator(
     {
         MainMenu: MainMenuScreen,
-        Settings: SettingsContainer
+        Settings: SettingsContainer,
+        GameLobby: GameLobbyContainer,
     },
     {
         initialRouteName: "MainMenu"

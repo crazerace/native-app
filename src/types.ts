@@ -28,6 +28,15 @@ export interface NewUserRequest {
     repPassword: string
 };
 
+export interface NewGameRequest {
+    name: string
+};
+
+export interface GameInfo {
+    id: string
+    name: string
+}
+
 export interface LoginRequest {
     username: string
     password: string

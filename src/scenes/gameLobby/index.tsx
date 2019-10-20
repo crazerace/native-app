@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 
 interface Props { };
 
-export default class GameLobby extends Component<Props> {
+export default class GameLobbyContainer extends Component<Props> {
     render() {
         return (
             <View>
