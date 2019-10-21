@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Input, Button, Text } from 'react-native-ui-kitten';
+import { Text } from 'react-native-ui-kitten';
 import log from '@czarsimon/remotelogger';
-import { NewGameRequest } from "@src/types";
 import { useTexts } from '../../../../../state/hooks';
 import MenuModal from '../../../components/MenuModal';
 
 interface Props {
   isOpen: boolean
   close: () => void
-  createGame: (game: NewGameRequest) => void,
   error?: string
 };
 
-export default function CreateGame({ isOpen, close, createGame }: Props) {
+export default function JoinGame({ isOpen, close }: Props) {
   const texts = useTexts();
-  const [name, setName] = useState<string>("");
-  const submit = () => createGame({ name });
   const onClose = () => {
-    log.debug('CreateGame: Closed modal');
+    log.debug('JoinGame: Closed modal');
     close();
   }
 
@@ -26,16 +22,8 @@ export default function CreateGame({ isOpen, close, createGame }: Props) {
     <MenuModal visible={isOpen} onClose={onClose}>
       <View style={styles.container} >
         <Text style={styles.title} category='h3'>
-          {texts("NEW_GAME_TITLE")}
+          {texts("SEARCH_GAME_TITLE")}
         </Text>
-        <Input
-          style={styles.input}
-          onChangeText={setName}
-          autoCapitalize="none"
-          placeholder={texts("GAME_NAME_PLACEHOLDER")} />
-        <Button onPressOut={submit}>
-          {texts("CREATE_BUTTON")}
-        </Button>
       </View>
     </MenuModal>
   );

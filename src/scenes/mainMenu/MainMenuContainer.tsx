@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import log from "@czarsimon/remotelogger";
 import MainMenu from "./components/MainMenu";
 import CreateGameContainer from "./containers/createGame";
+import JoinGameContainer from "./containers/joinGame";
 import { Navigation } from "@src/types";
 
 interface Props {
@@ -38,6 +39,7 @@ export default function MainMenuContainer({ navigation }: Props) {
     <View style={styles.container}>
       <MainMenu joinGame={joinGame} createGame={createGame} />
       <CreateGameContainer isOpen={createGameOpen} close={close} navigate={goToGameLobby} />
+      <JoinGameContainer isOpen={joinGameOpen} close={close} navigate={goToGameLobby} />
     </View>
   );
 };

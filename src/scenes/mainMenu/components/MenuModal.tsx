@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import { StyleSheet, View, Modal, Text, TouchableOpacity } from 'react-native';
-import TranslatedText from '../../../../../components/TranslatedText';
+import { StyleSheet, View, Modal, TouchableOpacity } from 'react-native';
+import TranslatedText from '../../../components/TranslatedText';
 
 interface Props {
   onClose: () => void

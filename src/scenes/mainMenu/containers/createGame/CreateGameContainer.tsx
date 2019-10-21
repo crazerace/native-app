@@ -1,4 +1,5 @@
 import React from 'react';
+import log from '@czarsimon/remotelogger';
 import CreateGame from './components/CreateGame';
 import { NewGameRequest } from '@src/types';
 import { useDispatch } from 'react-redux';
@@ -12,16 +13,14 @@ interface Props {
 
 export default function CreateGameContainer({ isOpen, navigate, close }: Props) {
   const dispatch = useDispatch();
-  const successCallback = () => {
-    close();
-    navigate();
-  }
-
   const onCreateGame = (game: NewGameRequest) => {
-    console.log(`Created game ${game.name}`)
-    dispatch(createGame(game, successCallback));
+    log.debug(`CreateGameContainer: Created game ${game.name}`)
+    dispatch(createGame(game, () => {
+      close();
+      navigate();
+    }));
+  };
 
-  }
   return (
     <CreateGame
       createGame={onCreateGame}
