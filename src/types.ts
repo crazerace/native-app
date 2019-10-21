@@ -18,9 +18,11 @@ export type NavigationCallback = (success: boolean) => void;
 
 // DTO types.
 
-export interface TextMap {
-  [key: string]: string;
-};
+interface TypedMap<T> {
+  [key: string]: T
+}
+
+export type TextMap = TypedMap<string>;
 
 export interface NewUserRequest {
   username: string
@@ -45,6 +47,8 @@ export interface GameMember {
   isReady: boolean
   createdAt: string
 };
+
+export type GameMembers = TypedMap<GameMember>;
 
 export interface Game extends GameInfo {
   questions: number
@@ -103,6 +107,7 @@ export interface UserState {
 
 export interface GameState {
   info?: Game
+  gameMembers: GameMembers
 };
 
 // Utility types

@@ -3,7 +3,6 @@ import httpclient from '@czarsimon/httpclient';
 import log from '@czarsimon/remotelogger';
 import { NewUserRequest, Credentials, RenewRequest, Optional, Thunk, Dispatch, LoginRequest, NavigationCallback } from "@src/types";
 import { USER_ID_KEY, RENEW_TOKEN_KEY } from "../../constants";
-import { createApiUrl } from "../../service/api";
 import { addCredentials, removeCredentials } from "./actions";
 import { createNewUser, loginUser, renewUserToken } from '../../api';
 
