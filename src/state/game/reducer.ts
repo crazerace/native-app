@@ -23,6 +23,6 @@ function addGame(state: GameState, game: Game): GameState {
       ...keyBy(game.members, 'id')
     }
   };
-}
+};
 
 export default reducer;
