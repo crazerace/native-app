@@ -1,7 +1,7 @@
 import log from '@czarsimon/remotelogger';
 import { Thunk, Dispatch, NewGameRequest, Optional } from "@src/types";
 import { addGame } from './actions';
-import { createNewGame, fetchGame } from '../../api';
+import { createNewGame, fetchGame, addUserToGame } from '../../api';
 
 export const createGame = (game: NewGameRequest, callback: () => void): Thunk<void> => {
   return async (dispatch: Dispatch): Promise<void> => {
@@ -31,6 +31,31 @@ export const createGame = (game: NewGameRequest, callback: () => void): Thunk<vo
   };
 };
 
+export const joinGame = (id: string, callback: () => void): Thunk<void> => {
+  return async (dispatch: Dispatch): Promise<void> => {
+    const {
+      body: gameMember,
+      error: gameMemberError,
+      status: gameMemberStatus
+    } = await addUserToGame(id);
+    if (!gameMember) {
+      log.error(`Unable to join game. Status=${gameMemberStatus} Error=${gameMemberError}`)
+      return;
+    };
+    log.debug(`Successfully joined Game(id=${id})`);
+    
+    const { body, error, status } = await fetchGame(id);
+    if (!body) {
+      handleFetchGameError(id, error, status);
+      // TODO: format and call displayError.
+      return;
+    };
+    
+    dispatch(addGame(body));
+    callback();
+  };
+};
+
 function handleCreateGameError(error: Optional<any>, status: number) {
   if (!error) {
     log.error(`Failed to create game. Status=${status}. Error=undefined`);
@@ -50,3 +75,5 @@ function handleFetchGameError(gameId: string, error: Optional<any>, status: numb
   const { message, requestId } = error;
   log.error(`Failed to fetch game. gameId=${gameId} Error(message=${message}, requestId=${requestId}): Status: ${status}`);
 };
+
+

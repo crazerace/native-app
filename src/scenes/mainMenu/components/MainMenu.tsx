@@ -18,7 +18,7 @@ export default function MainMenu({ createGame, joinGame }: Props) {
         {texts("CREATE_GAME_BUTTON")}
       </Button>
       <Button onPressOut={joinGame} style={style.button} >
-        {texts("JOIN_GAME_BUTTON")}
+        {texts("FIND_GAME_BUTTON")}
       </Button>
     </View>
   );

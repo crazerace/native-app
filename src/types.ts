@@ -34,6 +34,10 @@ export interface NewGameRequest {
   name: string
 };
 
+export interface GameCode {
+  code: string
+};
+
 export interface GameInfo {
   id: string
   name: string

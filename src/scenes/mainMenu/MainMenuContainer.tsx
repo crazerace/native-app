@@ -12,7 +12,7 @@ interface Props {
 
 export default function MainMenuContainer({ navigation }: Props) {
   const [createGameOpen, setCreateGameOpen] = useState(false);
-  const [joinGameOpen, setJoinGameOpen] = useState(false);
+  const [joinGameOpen, setJoinGameOpen] = useState(true);
 
   function createGame() {
     log.debug("MainMenuContainer: Opened CreateGame modal");
