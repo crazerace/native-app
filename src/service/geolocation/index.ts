@@ -2,7 +2,7 @@ import { GeolocationReturnType, GeolocationError } from "react-native";
 import log from '@czarsimon/remotelogger';
 import { Coordinate } from "@src/types";
 
-export async function getPosition(): Promise<Coordinate> {
+export function getPosition(): Promise<Coordinate> {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(
       (position: GeolocationReturnType) => resolve(createPosition(position)),
