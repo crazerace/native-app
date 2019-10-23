@@ -23,7 +23,9 @@ export default function CreateGameContainer({ isOpen, close, navigate }: Props) 
         log.error(`Unable to find game. Status=${status} Error=${error.message}`)
         return;
       };
-      log.debug(`Fetched game by shortcode. Game id: ${body.id} and game name: ${body.name}`)
+
+      const { id, name } = body;
+      log.debug(`Fetched game by shortcode. GameInfo(id=${id}, name=${name})`)
       setGame(body);
     });
   };
@@ -35,7 +37,7 @@ export default function CreateGameContainer({ isOpen, close, navigate }: Props) 
       navigate();
     }))
   };
-  
+
   return (
     <JoinGame
       isOpen={isOpen}

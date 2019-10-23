@@ -39,18 +39,18 @@ export const joinGame = (id: string, callback: () => void): Thunk<void> => {
       status: gameMemberStatus
     } = await addUserToGame(id);
     if (!gameMember) {
-      log.error(`Unable to join game. Status=${gameMemberStatus} Error=${gameMemberError}`)
+      handleJoinGameError(id, gameMemberError, gameMemberError);
       return;
     };
     log.debug(`Successfully joined Game(id=${id})`);
-    
+
     const { body, error, status } = await fetchGame(id);
     if (!body) {
       handleFetchGameError(id, error, status);
       // TODO: format and call displayError.
       return;
     };
-    
+
     dispatch(addGame(body));
     callback();
   };
@@ -76,4 +76,13 @@ function handleFetchGameError(gameId: string, error: Optional<any>, status: numb
   log.error(`Failed to fetch game. gameId=${gameId} Error(message=${message}, requestId=${requestId}): Status: ${status}`);
 };
 
+function handleJoinGameError(gameId: string, error: Optional<any>, status: number) {
+  if (!error) {
+    log.error(`Failed to join game. gameId=${gameId} Status=${status}. Error=undefined`);
+    return;
+  }
+
+  const { message, requestId } = error;
+  log.error(`Failed to join game. gameId=${gameId} Error(message=${message}, requestId=${requestId}): Status: ${status}`);
+};
 

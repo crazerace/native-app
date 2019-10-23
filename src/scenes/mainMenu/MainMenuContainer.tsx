@@ -12,7 +12,7 @@ interface Props {
 
 export default function MainMenuContainer({ navigation }: Props) {
   const [createGameOpen, setCreateGameOpen] = useState(false);
-  const [joinGameOpen, setJoinGameOpen] = useState(true);
+  const [joinGameOpen, setJoinGameOpen] = useState(false);
 
   function createGame() {
     log.debug("MainMenuContainer: Opened CreateGame modal");
@@ -35,9 +35,13 @@ export default function MainMenuContainer({ navigation }: Props) {
     navigation.navigate("GameLobby");
   }
 
+  function goToSettings() {
+    navigation.navigate("Settings");
+  }
+
   return (
     <View style={styles.container}>
-      <MainMenu joinGame={joinGame} createGame={createGame} />
+      <MainMenu joinGame={joinGame} createGame={createGame} goToSettings={goToSettings} />
       <CreateGameContainer isOpen={createGameOpen} close={close} navigate={goToGameLobby} />
       <JoinGameContainer isOpen={joinGameOpen} close={close} navigate={goToGameLobby} />
     </View>

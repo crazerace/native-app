@@ -53,7 +53,7 @@ export default function JoinGame({ isOpen, findGame, joinGame, game, close }: Pr
         {game && (
           <View>
             <Text category='h5' style={styles.gameName}>{`${game.name}`}</Text>
-            <Button onPressOut={join} style={{ backgroundColor: '#27AE60', borderColor: '#27AE60' }}>
+            <Button onPressOut={join} style={styles.joinGameButton}>
               {texts("JOIN_GAME_BUTTON")}
             </Button>
           </View>
@@ -91,5 +91,9 @@ const styles = StyleSheet.create({
     paddingTop: 6,
     paddingBottom: 8,
     borderRadius: 4,
+  },
+  joinGameButton: {
+    backgroundColor: '#27AE60',
+    borderColor: '#27AE60'
   },
 });
