@@ -31,23 +31,29 @@ export default function JoinGame({ isOpen, findGame, joinGame, game, close }: Pr
 
   return (
     <MenuModal visible={isOpen} onClose={onClose}>
-      <View style={styles.container} >
-        <Text style={styles.title} category='h3'>
-          {texts("SEARCH_GAME_TITLE")}
-        </Text>
-        <Input
-          style={styles.input}
-          onChangeText={setCode}
-          onTouchEnd={() => setIsDisabled(false)}
-          autoCapitalize="none"
-          placeholder={texts("GAME_CODE_PLACEHOLDER")} />
-        <Button onPressOut={find} disabled={isDisabled}>
-          {texts("FIND_GAME_BUTTON")}
-        </Button>
+      <View style={styles.container}>
+        <View style={(isDisabled) ? styles.searchOutOfFocus : styles.search}>
+          <Text style={styles.title} category='h3'>
+            {texts("SEARCH_GAME_TITLE")}
+          </Text>
+          <Input
+            style={styles.input}
+            onChangeText={setCode}
+            onTouchEnd={() => setIsDisabled(false)}
+            autoCapitalize="none"
+            autoFocus={true}
+            onSubmitEditing={find}
+            placeholder={texts("GAME_CODE_PLACEHOLDER")} />
+          {!isDisabled && (
+            <Button onPressOut={find}>
+              {texts("FIND_GAME_BUTTON")}
+            </Button>
+          )}
+        </View>
         {game && (
           <View>
             <Text category='h5' style={styles.gameName}>{`${game.name}`}</Text>
-            <Button onPressOut={join} style={{backgroundColor: '#27AE60', borderColor: '#27AE60'}}>
+            <Button onPressOut={join} style={{ backgroundColor: '#27AE60', borderColor: '#27AE60' }}>
               {texts("JOIN_GAME_BUTTON")}
             </Button>
           </View>
@@ -60,6 +66,12 @@ export default function JoinGame({ isOpen, findGame, joinGame, game, close }: Pr
 const styles = StyleSheet.create({
   container: {
     margin: '5%',
+  },
+  search: {
+    opacity: 1.0
+  },
+  searchOutOfFocus: {
+    opacity: 0.6
   },
   title: {
     textAlign: 'center',
