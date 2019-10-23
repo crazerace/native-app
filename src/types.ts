@@ -78,7 +78,12 @@ export interface User {
   id: string
   username: string
   createdAt: string
-}
+};
+
+export interface Coordinate {
+  latitude: number
+  longitude: number
+};
 
 export interface Error {
   errorId: string
