@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { getPosition } from '../../service/geolocation';
+import GameLobby from './components/GameLobby';
 
 interface Props { };
 
@@ -12,7 +13,7 @@ export default function GameLobbyContainer(props: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Game Lobby</Text>
+      <GameLobby/>
     </View>
   );
 };
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    marginBottom: '10%',
   },
   text: {
     textAlign: 'center',
