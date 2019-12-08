@@ -46,7 +46,7 @@ export interface GameInfo {
 export interface GameMember {
   id: string
   gameId: string
-  userId: string
+  user: User
   isAdmin: boolean
   isReady: boolean
   createdAt: string
@@ -58,6 +58,7 @@ export interface Game extends GameInfo {
   startedAt?: string
   endedAt?: string
   members: Array<GameMember>
+  status: string
 };
 
 export interface LoginRequest {
