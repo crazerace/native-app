@@ -1,4 +1,4 @@
-import { TextProps, TextGetter, GameState, Optional, Game } from "@src/types";
+import { TextProps, TextGetter, GameState, Optional, Game, Credentials, UserState } from "@src/types";
 import { AppState } from ".";
 import { translatedText } from "../service/texts";
 import { useSelector } from "react-redux";
@@ -23,3 +23,11 @@ export function useActiveGame(): Optional<Game> {
 function gameSelector(state: AppState): GameState {
   return state.game
 }
+
+export function useCredentials(): Optional<Credentials> {
+    return useSelector(userSelector).credentials;
+}
+
+function userSelector(state: AppState): UserState {
+    return state.user;
+} 

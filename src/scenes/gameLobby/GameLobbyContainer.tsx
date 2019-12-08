@@ -11,9 +11,17 @@ export default function GameLobbyContainer(props: Props) {
     console.log(`Longitude: ${longitude}`);
   });
 
+  const memberReadyHandler = () => {
+    console.log("I'm ready!")
+  }
+
+  const startGameHandler = () => {
+    console.log("Starting Game")
+  }
+
   return (
     <View style={styles.container}>
-      <GameLobby/>
+      <GameLobby memberReady={memberReadyHandler} startGame={startGameHandler}/>
     </View>
   );
 };
