@@ -52,8 +52,6 @@ export interface GameMember {
   createdAt: string
 };
 
-export type GameMembers = TypedMap<GameMember>;
-
 export interface Game extends GameInfo {
   questions: number
   createdAt: string
@@ -115,8 +113,8 @@ export interface UserState {
 };
 
 export interface GameState {
-  info?: Game
-  gameMembers: GameMembers
+  loaded: boolean
+  game?: Game
 };
 
 // Utility types

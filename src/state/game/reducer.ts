@@ -6,8 +6,8 @@ import * as actions from "./actions";
 type GameAction = ActionType<typeof actions>;
 
 const initalState: GameState = {
-  info: undefined,
-  gameMembers: {}
+  loaded: false,
+  game: undefined
 };
 
 const reducer = createReducer<GameState, GameAction>(initalState)
@@ -17,11 +17,8 @@ const reducer = createReducer<GameState, GameAction>(initalState)
 function addGame(state: GameState, game: Game): GameState {
   return {
     ...state,
-    info: game,
-    gameMembers: {
-      ...state.gameMembers,
-      ...keyBy(game.members, 'id')
-    }
+    loaded: true,
+    game
   };
 };
 
