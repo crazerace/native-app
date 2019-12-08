@@ -24,7 +24,7 @@ const isAdmin = (userId: string, gameMembers: Array<GameMember>): boolean => {
 export default function GameLobby({memberReady, startGame}: Props) {
   const texts = useTexts();
   const game = useActiveGame()!;
-  const gameCode = game.id.substr(0, 4);
+  const gameCode = game.id.substr(0, 4).toUpperCase();
   const [ isReady, setIsReady ] = useState<boolean>(false);
   const { userId } = useCredentials()!;
 
@@ -33,28 +33,29 @@ export default function GameLobby({memberReady, startGame}: Props) {
     setIsReady(true);
   }
 
-  const isAdmin = () => {
-    game.members
-  }
-
+  const userIsAdmin = isAdmin(userId, game.members);
+ 
   return (
     <View style={styles.container}>
-      <Text category='h2'>{game.name}</Text>
-      <Text category='h3'>{`${texts("GAME_CODE_PLACEHOLDER")}: ${gameCode}`}</Text>
+      <Text category='h1' style={styles.title}>{game.name}</Text>
+      <View style={styles.gameCode}>
+        <Text category='h5' style={styles.gameCodeLabel}>
+          {`${texts("GAME_CODE_PLACEHOLDER")}: `}
+        </Text>
+        <Text category='h5'>{gameCode}</Text>
+      </View>
       <MemberList members={game.members} />
       {isReady ? 
         <Button onPressOut={() => ready()} style={styles.readyButton}>{texts("MEMBER_READY_BUTTON")}</Button>:
         <Button onPressOut={() => ready()} style={styles.notReadyButton}>{texts("MEMBER_READY_BUTTON")}</Button>
       }
-      <Button onPressOut={() => startGame()} style={styles.startGameButton}>{texts("START_GAME_BUTTON")}</Button>
+      {userIsAdmin && <Button onPressOut={() => startGame()} style={styles.startGameButton}>{texts("START_GAME_BUTTON")}</Button>}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    borderStyle: 'solid',
-    borderWidth: 1,
     margin: '5%',
   },
   readyButton: {
@@ -67,5 +68,18 @@ const styles = StyleSheet.create({
   },
   startGameButton: {
     marginTop: 15
+  },
+  title: {
+    textAlign: "center",
+    marginTop: 10,
+    marginBottom: 5,
+  },
+  gameCode: {
+    flexDirection: 'row',
+    justifyContent: "center",
+    marginBottom: 10
+  },
+  gameCodeLabel: {
+    color: '#A9A9A9'
   }
 });
