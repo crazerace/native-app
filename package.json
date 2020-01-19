@@ -7,8 +7,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@czarsimon/httpclient": "^0.4.0",
-    "@czarsimon/remotelogger": "^0.4.0",
+    "@czarsimon/httpclient": "^0.6.0",
+    "@czarsimon/remotelogger": "^0.9.0",
     "@eva-design/eva": "^1.0.1",
     "@react-native-community/async-storage": "^1.5.0",
     "@types/lodash": "^4.14.144",

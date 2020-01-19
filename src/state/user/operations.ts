@@ -1,22 +1,22 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import httpclient from '@czarsimon/httpclient';
 import log from '@czarsimon/remotelogger';
 import { NewUserRequest, Credentials, RenewRequest, Optional, Thunk, Dispatch, LoginRequest, NavigationCallback } from "@src/types";
 import { USER_ID_KEY, RENEW_TOKEN_KEY } from "../../constants";
 import { addCredentials, removeCredentials } from "./actions";
 import { createNewUser, loginUser, renewUserToken } from '../../api';
+import { setToken } from '../../api/httpclient';
 
 export const signUp = (credentials: NewUserRequest, callback: NavigationCallback): Thunk<void> => {
   return async (dispatch: Dispatch): Promise<void> => {
-    const { body, error, status } = await createNewUser(credentials);
+    const { body, error, metadata } = await createNewUser(credentials);
     if (!body) {
-      handleSignupError(credentials.username, error, status);
+      handleSignupError(credentials.username, error, metadata.status);
       callback(false);
       return;
     }
     log.debug(`Successfully created new user: ${credentials.username}`);
 
-    httpclient.configure({ authToken: body.token });
+    setToken(body.token);
     await storeCredentials(body);
     dispatch(addCredentials(body));
     callback(true);
@@ -25,15 +25,15 @@ export const signUp = (credentials: NewUserRequest, callback: NavigationCallback
 
 export const login = (credentials: LoginRequest, callback: NavigationCallback): Thunk<void> => {
   return async (dispatch: Dispatch): Promise<void> => {
-    const { body, error, status } = await loginUser(credentials);
+    const { body, error, metadata } = await loginUser(credentials);
     if (!body) {
-      handleLoginError(credentials.username, error, status);
+      handleLoginError(credentials.username, error, metadata.status);
       callback(false);
       return;
     }
     log.debug(`Logged in user: ${credentials.username}`);
 
-    httpclient.configure({ authToken: body.token });
+    setToken(body.token);
     await storeCredentials(body);
     dispatch(addCredentials(body));
     callback(true);
@@ -42,15 +42,15 @@ export const login = (credentials: LoginRequest, callback: NavigationCallback): 
 
 export const renewToken = (renewRequest: RenewRequest, callback: NavigationCallback): Thunk<void> => {
   return async (dispatch: Dispatch): Promise<void> => {
-    const { body, error, status } = await renewUserToken(renewRequest);
+    const { body, error, metadata } = await renewUserToken(renewRequest);
     if (!body) {
-      handleRenewError(renewRequest.userId, error, status);
+      handleRenewError(renewRequest.userId, error, metadata.status);
       callback(false);
       return;
     }
     log.debug(`Renewed credentials for user: ${renewRequest.userId}`);
 
-    httpclient.configure({ authToken: body.token });
+    setToken(body.token);
     await storeCredentials(body);
     dispatch(addCredentials(body));
     callback(true);

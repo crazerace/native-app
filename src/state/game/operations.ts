@@ -8,10 +8,10 @@ export const createGame = (game: NewGameRequest, callback: () => void): Thunk<vo
     const {
       body: gameInfo,
       error: gameInfoError,
-      status: gameInfoStatus
+      metadata: gameInfoMetadata
     } = await createNewGame(game);
     if (!gameInfo) {
-      handleCreateGameError(gameInfoError, gameInfoStatus);
+      handleCreateGameError(gameInfoError, gameInfoMetadata.status);
       // TODO: format and call displayError.
       return;
     };
@@ -19,9 +19,9 @@ export const createGame = (game: NewGameRequest, callback: () => void): Thunk<vo
     const { id, name } = gameInfo;
     log.debug(`Successfully created new Game(id=${id}, name=${name})`);
 
-    const { body, error, status } = await fetchGame(id);
+    const { body, error, metadata } = await fetchGame(id);
     if (!body) {
-      handleFetchGameError(id, error, status);
+      handleFetchGameError(id, error, metadata.status);
       // TODO: format and call displayError.
       return;
     };
@@ -36,17 +36,17 @@ export const joinGame = (id: string, callback: () => void): Thunk<void> => {
     const {
       body: gameMember,
       error: gameMemberError,
-      status: gameMemberStatus
+      metadata: gameMemberMetadata
     } = await addUserToGame(id);
     if (!gameMember) {
-      handleJoinGameError(id, gameMemberError, gameMemberError);
+      handleJoinGameError(id, gameMemberError, gameMemberMetadata.status);
       return;
     };
     log.debug(`Successfully joined Game(id=${id})`);
 
-    const { body, error, status } = await fetchGame(id);
+    const { body, error, metadata } = await fetchGame(id);
     if (!body) {
-      handleFetchGameError(id, error, status);
+      handleFetchGameError(id, error, metadata.status);
       // TODO: format and call displayError.
       return;
     };

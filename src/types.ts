@@ -18,7 +18,7 @@ export type NavigationCallback = (success: boolean) => void;
 
 // DTO types.
 
-interface TypedMap<T> {
+export interface TypedMap<T> {
   [key: string]: T
 }
 
@@ -125,4 +125,9 @@ export type TextGetter = (key: string) => Optional<string>;
 
 export interface TextProps {
   texts: TextGetter
+}
+
+export interface Client {
+  id: string;
+  sessionId: string;
 }
