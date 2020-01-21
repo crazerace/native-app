@@ -12,7 +12,7 @@ import {
 } from "../constants";
 import { createApiUrl } from "../service/api";
 import { Client } from '../types';
-import { initHttpclient } from '@src/api/httpclient';
+import { initHttpclient } from '../api/httpclient';
 
 function initLogAndHttpclient(client: Client) {
   const consoleLevel = DEV_MODE ? level.DEBUG : level.ERROR;

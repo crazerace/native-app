@@ -10,6 +10,7 @@ export function initHttpclient(client: Client, handlers: Handlers) {
     baseHeaders: {
       "X-Client-ID": client.id,
       "X-Session-ID": client.sessionId,
+      "Accept-Language": "sv",
     },
     transport: new Fetch(),
   });
