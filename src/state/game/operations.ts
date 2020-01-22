@@ -2,6 +2,7 @@ import log from '@czarsimon/remotelogger';
 import { Thunk, Dispatch, NewGameRequest, Optional } from "@src/types";
 import { addGame } from './actions';
 import { createNewGame, fetchGame, addUserToGame } from '../../api';
+import { ResponseMetadata } from '@czarsimon/httpclient';
 
 export const createGame = (game: NewGameRequest, callback: () => void): Thunk<void> => {
   return async (dispatch: Dispatch): Promise<void> => {
@@ -11,7 +12,7 @@ export const createGame = (game: NewGameRequest, callback: () => void): Thunk<vo
       metadata: gameInfoMetadata
     } = await createNewGame(game);
     if (!gameInfo) {
-      handleCreateGameError(gameInfoError, gameInfoMetadata.status);
+      handleCreateGameError(gameInfoError, gameInfoMetadata);
       // TODO: format and call displayError.
       return;
     };
@@ -21,7 +22,7 @@ export const createGame = (game: NewGameRequest, callback: () => void): Thunk<vo
 
     const { body, error, metadata } = await fetchGame(id);
     if (!body) {
-      handleFetchGameError(id, error, metadata.status);
+      handleFetchGameError(id, error, metadata);
       // TODO: format and call displayError.
       return;
     };
@@ -39,14 +40,14 @@ export const joinGame = (id: string, callback: () => void): Thunk<void> => {
       metadata: gameMemberMetadata
     } = await addUserToGame(id);
     if (!gameMember) {
-      handleJoinGameError(id, gameMemberError, gameMemberMetadata.status);
+      handleJoinGameError(id, gameMemberError, gameMemberMetadata);
       return;
     };
     log.debug(`Successfully joined Game(id=${id})`);
 
     const { body, error, metadata } = await fetchGame(id);
     if (!body) {
-      handleFetchGameError(id, error, metadata.status);
+      handleFetchGameError(id, error, metadata);
       // TODO: format and call displayError.
       return;
     };
@@ -56,33 +57,21 @@ export const joinGame = (id: string, callback: () => void): Thunk<void> => {
   };
 };
 
-function handleCreateGameError(error: Optional<any>, status: number) {
-  if (!error) {
-    log.error(`Failed to create game. Status=${status}. Error=undefined`);
-    return;
-  }
-
-  const { message, requestId } = error;
-  log.error(`Failed to create game. Error(message=${message}, requestId=${requestId}): Status: ${status}`);
+function handleCreateGameError(error: Optional<Error>, metadata: ResponseMetadata) {
+  logError("Failed to fetch create.", error, metadata);
 };
 
-function handleFetchGameError(gameId: string, error: Optional<any>, status: number) {
-  if (!error) {
-    log.error(`Failed to fetch game. gameId=${gameId} Status=${status}. Error=undefined`);
-    return;
-  }
-
-  const { message, requestId } = error;
-  log.error(`Failed to fetch game. gameId=${gameId} Error(message=${message}, requestId=${requestId}): Status: ${status}`);
+function handleFetchGameError(gameId: string, error: Optional<Error>, metadata: ResponseMetadata) {
+  logError(`Failed to fetch game. gameId=${gameId}`, error, metadata);
 };
 
-function handleJoinGameError(gameId: string, error: Optional<any>, status: number) {
-  if (!error) {
-    log.error(`Failed to join game. gameId=${gameId} Status=${status}. Error=undefined`);
-    return;
-  }
-
-  const { message, requestId } = error;
-  log.error(`Failed to join game. gameId=${gameId} Error(message=${message}, requestId=${requestId}): Status: ${status}`);
+function handleJoinGameError(gameId: string, error: Optional<Error>, metadata: ResponseMetadata) {
+  logError(`Failed to join game. gameId=${gameId}`, error, metadata);
 };
+
+function logError(messge: string, error: Optional<Error>, metadata: ResponseMetadata) {
+  const { requestId, status } = metadata;
+  const errorDescription = error ? `error=[${error}]` : `error=[undefined]`;
+  log.error(`${messge} Error(${errorDescription}, requestId=${requestId}): Status: ${status}`);
+}
 

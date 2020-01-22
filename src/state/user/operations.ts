@@ -5,12 +5,13 @@ import { USER_ID_KEY, RENEW_TOKEN_KEY } from "../../constants";
 import { addCredentials, removeCredentials } from "./actions";
 import { createNewUser, loginUser, renewUserToken } from '../../api';
 import { setToken } from '../../api/httpclient';
+import { ResponseMetadata } from '@czarsimon/httpclient';
 
 export const signUp = (credentials: NewUserRequest, callback: NavigationCallback): Thunk<void> => {
   return async (dispatch: Dispatch): Promise<void> => {
     const { body, error, metadata } = await createNewUser(credentials);
     if (!body) {
-      handleSignupError(credentials.username, error, metadata.status);
+      handleSignupError(credentials.username, error, metadata);
       callback(false);
       return;
     }
@@ -27,7 +28,7 @@ export const login = (credentials: LoginRequest, callback: NavigationCallback): 
   return async (dispatch: Dispatch): Promise<void> => {
     const { body, error, metadata } = await loginUser(credentials);
     if (!body) {
-      handleLoginError(credentials.username, error, metadata.status);
+      handleLoginError(credentials.username, error, metadata);
       callback(false);
       return;
     }
@@ -44,7 +45,7 @@ export const renewToken = (renewRequest: RenewRequest, callback: NavigationCallb
   return async (dispatch: Dispatch): Promise<void> => {
     const { body, error, metadata } = await renewUserToken(renewRequest);
     if (!body) {
-      handleRenewError(renewRequest.userId, error, metadata.status);
+      handleRenewError(renewRequest.userId, error, metadata);
       callback(false);
       return;
     }
@@ -66,35 +67,23 @@ export const logOut = (callback: () => void): Thunk<void> => {
   };
 };
 
-function handleSignupError(username: string, error: Optional<any>, status: number) {
-  if (!error) {
-    log.error(`Failed to create user. username=${username} status=${status} Error=undefined`);
-    return;
-  }
-
-  const { message, requestId } = error;
-  log.error(`Failed to create user. username=${username} Error(message=${message}, requestId=${requestId}): Status: ${status}`);
+function handleSignupError(username: string, error: Optional<Error>, metadata: ResponseMetadata) {
+  logError(`Failed to create user. username=${username}`, error, metadata);
 };
 
-function handleLoginError(username: string, error: Optional<any>, status: number) {
-  if (!error) {
-    log.error(`Failed to login user. username=${username} status=${status} Error=undefined`);
-    return;
-  }
-
-  const { message, requestId } = error;
-  log.error(`Failed to login user. username=${username} Error(message=${message}, requestId=${requestId}): Status: ${status}`);
+function handleLoginError(username: string, error: Optional<Error>, metadata: ResponseMetadata) {
+  logError(`Failed to login user. username=${username}`, error, metadata);
 };
 
-function handleRenewError(userId: string, error: Optional<any>, status: number) {
-  if (!error) {
-    log.error(`Failed to login user. userId=${userId} status=${status} Error=undefined`);
-    return;
-  }
-
-  const { message, requestId } = error;
-  log.error(`Failed to login user. userId=${userId} Error(message=${message}, requestId=${requestId}): Status: ${status}`);
+function handleRenewError(userId: string, error: Optional<Error>, metadata: ResponseMetadata) {
+  logError(`Failed to login user. userId=${userId}`, error, metadata);
 };
+
+function logError(messge: string, error: Optional<Error>, metadata: ResponseMetadata) {
+  const { requestId, status } = metadata;
+  const errorDescription = error ? `error=[${error}]` : `error=[undefined]`;
+  log.error(`${messge} Error(${errorDescription}, requestId=${requestId}): Status: ${status}`);
+}
 
 
 async function storeCredentials(credentials: Credentials): Promise<any> {

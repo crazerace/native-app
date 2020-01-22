@@ -1,5 +1,5 @@
 import log from "@czarsimon/remotelogger";
-import { TextsState, TextGetter, TextMap, Optional, Error } from "../../types";
+import { TextsState, TextGetter, TextMap, Optional } from "../../types";
 import { TEXT_GROUP } from "../../constants";
 import { createApiUrl } from "../api";
 import { httpClient } from "../../api/httpclient";
@@ -22,15 +22,14 @@ export function translatedText(texts: TextsState): TextGetter {
 export async function fetchTexts(): Promise<Optional<TextMap>> {
   try {
     const url = createApiUrl(`/textservice/v1/texts/group/${TEXT_GROUP}`);
-    const { body, error } = await httpClient.get<TextMap, Error>({ url });
+    const { body, error } = await httpClient.get<TextMap>({ url });
     if (body) {
       log.debug("Translated texts loaded");
       return body;
     } else {
-      const errorMessage = (error && error.body) ? error.body.message : "No body returned for translated texts";
-      log.error(errorMessage);
+      log.error(`failed to fetch traslated text error=[${error}]`);
     }
   } catch (error) {
-    log.error(error.message);
+    log.error(`failed to fetch traslated text error=[${error}]`);
   }
 }
